@@ -1,4 +1,5 @@
-version: '3'
+version: '3.9'
+
 services:
 
   guacdb:
@@ -6,10 +7,10 @@ services:
     image: mariadb/server:latest
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'MariaDBRootPSW'
-      MYSQL_DATABASE: 'guacamole_db'
-      MYSQL_USER: 'guacamole_user'
-      MYSQL_PASSWORD: 'MariaDBUserPSW'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - 'guacdb-data:/var/lib/mysql'
 
@@ -25,11 +26,11 @@ services:
     ports:
       - '8080:8080'
     environment:
-      GUACD_HOSTNAME: "guacd"
-      MYSQL_HOSTNAME: "guacdb"
-      MYSQL_DATABASE: "guacamole_db"
-      MYSQL_USER: "guacamole_user"
-      MYSQL_PASSWORD: "MariaDBUserPSW"
+      GUACD_HOSTNAME: ${GUACD_HOSTNAME}
+      MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       - guacdb
       - guacd
