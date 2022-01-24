@@ -1,0 +1,20 @@
+# copy to traefik2/rules/ dir
+[http.routers]
+  [http.routers.guac-rtr]
+      entryPoints = ["https"]
+      rule = "Host(`guac.example.com`)"
+      service = "guac-svc"
+      middlewares = ["oauth", "guac-add-admin"]
+      [http.routers.guac-rtr.tls]
+        certresolver = "dns-cloudflare"
+
+[http.middlewares]
+  [http.middlewares.guac-add-admin.addPrefix]
+    prefix = "/guacamole"
+
+[http.services]
+  [http.services.guac-svc]
+    [http.services.guac-svc.loadBalancer]
+      passHostHeader = true
+      [[http.services.guac-svc.loadBalancer.servers]]
+        url = "http://192.168.10.1:1234" # or whatever your external host's IP:port is
