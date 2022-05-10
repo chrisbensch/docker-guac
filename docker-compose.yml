@@ -12,7 +12,8 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - 'guacdb-data:/var/lib/mysql'
+      - './data/mysql:/var/lib/mysql'
+      #- 'guacdb-data:/var/lib/mysql'
 
   guacd:
     container_name: guacd
@@ -35,5 +36,5 @@ services:
       - guacdb
       - guacd
 
-volumes:
-  guacdb-data:
+#volumes:
+#  guacdb-data:
